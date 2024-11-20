@@ -10,16 +10,19 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/metro-runtime": "~4.0.0",
+    "@hookform/resolvers": "^3.9.1",
     "@types/react-native": "^0.72.8",
     "@types/styled-components-react-native": "^5.2.5",
     "expo": "~52.0.7",
     "expo-status-bar": "~2.0.0",
     "react": "18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.2",
     "react-native": "0.76.2",
     "react-native-web": "^0.19.13",
     "styled-components": "^6.1.13",
-    "@expo/metro-runtime": "~4.0.0"
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
