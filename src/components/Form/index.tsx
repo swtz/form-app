@@ -23,12 +23,24 @@ const schema = yup.object({
 });
 
 export function Form() {
+  const ngrokLink = process.env.EXPO_PUBLIC_NGROK_LINK;
   const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: yupResolver(schema)
   });
 
   function handleUserRegister(data: FormData) {
-    Alert.alert('Cadastro concluído com sucesso!');
+    try {
+      fetch(`${ngrokLink}/customers`, {
+        mode: 'no-cors',
+        method: 'POST',
+        body: JSON.stringify(data)
+      });
+
+      Alert.alert('Cadastro concluído com sucesso!');
+    }
+    catch {
+      Alert.alert('Aconteceu algo inesperado');
+    }
   }
 
   return (
