@@ -4,20 +4,22 @@ import { ControlledInput } from '../ControlledInput';
 import { Container } from './styles';
 import { useForm } from 'react-hook-form';
 import * as yup from "yup";
+import 'yup-phone-lite';
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Alert } from 'react-native';
 
 type FormData = {
   name: string;
+  city: string;
   email: string;
-  password: string;
-  password_confirm?: string;
+  phone: string;
 }
 
 const schema = yup.object({
   name: yup.string().required("Informe seu nome"),
+  city: yup.string().required("Informe o nome da cidade onde você mora"),
   email: yup.string().email("E-mail inválido").required("Informe o e-mail"),
-  password: yup.string().min(6, "O tamanho da senha é inválido").required("Informe a senha"),
-  password_confirm: yup.string().oneOf([yup.ref('password'), undefined], "A senha de confirmação não confere")
+  phone: yup.string().phone('BR', 'Insira um número de celular válido').required('Informe seu número do celular.')
 });
 
 export function Form() {
@@ -25,9 +27,8 @@ export function Form() {
     resolver: yupResolver(schema)
   });
 
-
   function handleUserRegister(data: FormData) {
-    console.log(data);
+    Alert.alert('Cadastro concluído com sucesso!');
   }
 
   return (
@@ -40,6 +41,13 @@ export function Form() {
         error={errors.name}
       />
       <ControlledInput
+        name="city"
+        control={control}
+        icon="home"
+        placeholder="Cidade onde mora"
+        error={errors.city}
+      />
+      <ControlledInput
         name="email"
         control={control}
         icon="mail"
@@ -49,24 +57,16 @@ export function Form() {
         error={errors.email}
       />
       <ControlledInput
-        name="password"
+        name="phone"
         control={control}
-        icon="lock"
-        placeholder="Senha"
-        secureTextEntry
-        error={errors.password}
-      />
-      <ControlledInput
-        name="password_confirm"
-        control={control}
-        icon="lock"
-        placeholder="Confirme a senha"
-        secureTextEntry
-        error={errors.password_confirm}
+        icon="phone"
+        placeholder="DDD + Celular"
+        keyboardType='phone-pad'
+        error={errors.phone}
       />
 
       <Button
-        title="Cadastrar"
+        title="Enviar dados"
         onPress={handleSubmit(handleUserRegister)}
       />
     </Container>
